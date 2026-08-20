@@ -1,0 +1,13 @@
+[build]
+  command = "npm install"
+  publish = "public"
+
+[dev]
+  command = "npm run dev"
+  port = 8888
+
+[[redirects]]
+  from = "/api/*"
+  to = "http://localhost:5000/api/:splat"
+  status = 200
+  force = false
