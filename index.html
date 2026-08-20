@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAISONIA | Pahalı Markaların Ucuz Muadilleri</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+        body { background-color: #fcfcfc; color: #111; }
+        .top-bar { background: #000; color: #fff; text-align: center; padding: 8px; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; }
+        header { background: #fff; padding: 30px 20px 20px; text-align: center; border-bottom: 1px solid #eaeaea; }
+        .logo { font-size: 36px; font-weight: 300; letter-spacing: 8px; text-transform: uppercase; color: #000; text-decoration: none; }
+        .tagline { font-size: 11px; letter-spacing: 3px; color: #777; margin-top: 8px; text-transform: uppercase; }
+        
+        nav { display: flex; justify-content: center; align-items: center; gap: 20px; padding: 15px 0; border-bottom: 1px solid #f0f0f0; background: #fff; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; flex-wrap: wrap; }
+        nav a { color: #333; text-decoration: none; font-weight: 500; cursor: pointer; }
+        nav a:hover { color: #888; }
+        
+        .filter-section { background: #fff; padding: 20px; margin: 20px auto; max-width: 1200px; border: 1px solid #eee; }
+        .filter-group { display: flex; gap: 10px; flex-wrap: wrap; }
+        .filter-btn { padding: 8px 15px; background: #f5f5f5; border: 1px solid #ddd; cursor: pointer; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s; }
+        .filter-btn:hover { background: #000; color: #fff; }
+        .filter-btn.active { background: #000; color: #fff; }
+        
+        .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+        .section-header { text-align: center; margin-bottom: 35px; }
+        .section-title { font-size: 20px; font-weight: 400; letter-spacing: 3px; text-transform: uppercase; }
+        .section-subtitle { font-size: 13px; color: #666; margin-top: 5px; font-style: italic; }
+        
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+        .card { background: #fff; border: 1px solid #eee; transition: all 0.3s ease; }
+        .card:hover { border-color: #111; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        
+        .card-header { background: #f9f9f9; padding: 15px; border-bottom: 1px solid #eee; }
+        .expensive-brand { font-size: 12px; color: #d32f2f; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+        .product-name { font-size: 14px; font-weight: 500; margin-top: 5px; color: #111; }
+        
+        .card-body { padding: 20px; }
+        .comparison-table { width: 100%; font-size: 12px; border-collapse: collapse; }
+        .comparison-table td { padding: 10px 0; border-bottom: 1px solid #f0f0f0; }
+        .comparison-table td:first-child { color: #666; font-weight: 500; }
+        .comparison-table td:last-child { text-align: right; font-weight: 600; }
+        
+        .cheap-option { background: #f0f7f0; padding: 15px; margin-top: 15px; border-left: 4px solid #4caf50; }
+        .cheap-option .store { font-size: 11px; color: #666; text-transform: uppercase; letter-spacing: 1px; }
+        .cheap-option .price { font-size: 18px; font-weight: 600; color: #4caf50; margin: 8px 0; }
+        .cheap-option .discount { font-size: 12px; color: #d32f2f; font-weight: 600; }
+        
+        .btn-group { display: flex; gap: 10px; margin-top: 15px; }
+        .btn { flex: 1; padding: 10px; background: #000; color: #fff; text-decoration: none; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; transition: background 0.2s; border: none; cursor: pointer; text-align: center; }
+        .btn:hover { background: #333; }
+        .btn-secondary { background: #4caf50; }
+        .btn-secondary:hover { background: #45a049; }
+        
+        .category-badge { display: inline-block; background: #e0e0e0; padding: 4px 8px; font-size: 10px; border-radius: 2px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
+        
+        footer { margin-top: 80px; background: #fff; border-top: 1px solid #eee; padding: 40px 20px; text-align: center; font-size: 11px; color: #888; letter-spacing: 1px; }
+        
+        @media (max-width: 768px) {
+            .grid { grid-template-columns: 1fr; }
+            .comparison-table { font-size: 11px; }
+            .btn-group { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">MAISONIA — PAHALI MARKALARIN UCUZ MUADİLLERİ</div>
+    <header>
+        <a href="#" class="logo">MAISONIA</a>
+        <p class="tagline">Lüks Stil, Uygun Fiyat</p>
+    </header>
+    
+    <nav>
+        <a onclick="filterByCategory('all')">Tüm Ürünler</a>
+        <a onclick="filterByCategory('blazer')">Ceket</a>
+        <a onclick="filterByCategory('dress')">Elbise</a>
+        <a onclick="filterByCategory('pants')">Pantolon</a>
+        <a onclick="filterByCategory('shoes')">Ayakkabı</a>
+    </nav>
+    
+    <div class="filter-section">
+        <div class="filter-group">
+            <button class="filter-btn active" onclick="filterByStore('all')">Tüm Mağazalar</button>
+            <button class="filter-btn" onclick="filterByStore('beymen')">Beymen</button>
+            <button class="filter-btn" onclick="filterByStore('zara')">Zara</button>
+            <button class="filter-btn" onclick="filterByStore('hm')">H&M</button>
+            <button class="filter-btn" onclick="filterByStore('cheap')">Ucuz Alternatifler</button>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Editörün Marka Karşılaştırmaları</h2>
+            <p class="section-subtitle">Pahalı markaların aynı tarzda ucuz muadilleri</p>
+        </div>
+        
+        <div class="grid" id="grid-container">
+            <!-- Dinamik olarak doldurulacak -->
+        </div>
+    </div>
+    
+    <footer>
+        <p>© 2026 MAISONIA. TÜM HAKLARI SAKLIDIR. | Affiliate Links İçerebilir</p>
+    </footer>
+    
+    <script>
+        const products = [
+            {
+                id: 1,
+                category: 'blazer',
+                name: 'Oversized Wool Blazer',
+                expensive: {
+                    brand: 'Gucci',
+                    platform: 'Beymen',
+                    price: '12.500 TL',
+                    color: '#d32f2f'
+                },
+                cheap: [
+                    {
+                        brand: 'Mango',
+                        store: 'Trendyol',
+                        price: '599 TL',
+                        oldPrice: '899 TL',
+                        discount: '%33 İndirim',
+                        link: 'https://www.trendyol.com/mango'
+                    },
+                    {
+                        brand: 'Reserved',
+                        store: 'Hepsiburada',
+                        price: '549 TL',
+                        oldPrice: '799 TL',
+                        discount: '%31 İndirim',
+                        link: 'https://www.hepsiburada.com'
+                    }
+                ]
+            },
+            {
+                id: 2,
+                category: 'dress',
+                name: 'Black Satin Midi Dress',
+                expensive: {
+                    brand: 'Zara',
+                    platform: 'Beymen',
+                    price: '1.299 TL',
+                    color: '#ff6f00'
+                },
+                cheap: [
+                    {
+                        brand: 'ASOS Design',
+                        store: 'Trendyol',
+                        price: '359 TL',
+                        oldPrice: '599 TL',
+                        discount: '%40 İndirim',
+                        link: 'https://www.trendyol.com'
+                    },
+                    {
+                        brand: 'Defacto',
+                        store: 'Defacto',
+                        price: '279 TL',
+                        oldPrice: '499 TL',
+                        discount: '%44 İndirim',
+                        link: 'https://www.defacto.com.tr'
+                    }
+                ]
+            },
+            {
+                id: 3,
+                category: 'pants',
+                name: 'High-Waist Wide Leg Pants',
+                expensive: {
+                    brand: 'Valentino',
+                    platform: 'Beymen',
+                    price: '8.500 TL',
+                    color: '#d32f2f'
+                },
+                cheap: [
+                    {
+                        brand: 'H&M',
+                        store: 'H&M Online',
+                        price: '229 TL',
+                        oldPrice: '399 TL',
+                        discount: '%43 İndirim',
+                        link: 'https://www.hm.com/tr'
+                    },
+                    {
+                        brand: 'Zara',
+                        store: 'Zara Online',
+                        price: '279 TL',
+                        oldPrice: '499 TL',
+                        discount: '%44 İndirim',
+                        link: 'https://www.zara.com'
+                    }
+                ]
+            },
+            {
+                id: 4,
+                category: 'blazer',
+                name: 'Tailored Beige Blazer',
+                expensive: {
+                    brand: 'Prada',
+                    platform: 'Beymen',
+                    price: '15.000 TL',
+                    color: '#d32f2f'
+                },
+                cheap: [
+                    {
+                        brand: 'Mango',
+                        store: 'Trendyol',
+                        price: '649 TL',
+                        oldPrice: '999 TL',
+                        discount: '%35 İndirim',
+                        link: 'https://www.trendyol.com/mango'
+                    },
+                    {
+                        brand: 'C&A',
+                        store: 'Hepsiburada',
+                        price: '449 TL',
+                        oldPrice: '699 TL',
+                        discount: '%36 İndirim',
+                        link: 'https://www.hepsiburada.com'
+                    }
+                ]
+            },
+            {
+                id: 5,
+                category: 'shoes',
+                name: 'White Leather Sneakers',
+                expensive: {
+                    brand: 'Alexander McQueen',
+                    platform: 'Beymen',
+                    price: '3.500 TL',
+                    color: '#d32f2f'
+                },
+                cheap: [
+                    {
+                        brand: 'Reebok',
+                        store: 'Trendyol',
+                        price: '299 TL',
+                        oldPrice: '499 TL',
+                        discount: '%40 İndirim',
+                        link: 'https://www.trendyol.com'
+                    },
+                    {
+                        brand: 'Nike',
+                        store: 'Hepsiburada',
+                        price: '349 TL',
+                        oldPrice: '649 TL',
+                        discount: '%46 İndirim',
+                        link: 'https://www.hepsiburada.com'
+                    }
+                ]
+            },
+            {
+                id: 6,
+                category: 'dress',
+                name: 'Floral Print Sundress',
+                expensive: {
+                    brand: 'Oscar de la Renta',
+                    platform: 'Beymen',
+                    price: '5.999 TL',
+                    color: '#d32f2f'
+                },
+                cheap: [
+                    {
+                        brand: 'Koton',
+                        store: 'Koton',
+                        price: '199 TL',
+                        oldPrice: '399 TL',
+                        discount: '%50 İndirim',
+                        link: 'https://www.koton.com'
+                    },
+                    {
+                        brand: 'LC Waikiki',
+                        store: 'LC Waikiki',
+                        price: '149 TL',
+                        oldPrice: '299 TL',
+                        discount: '%50 İndirim',
+                        link: 'https://www.lcwaikiki.com/tr-TR/'
+                    }
+                ]
+            }
+        ];
+        
+        let currentFilter = { category: 'all', store: 'all' };
+        
+        function renderProducts() {
+            const container = document.getElementById('grid-container');
+            container.innerHTML = '';
+            
+            const filtered = products.filter(p => {
+                const categoryMatch = currentFilter.category === 'all' || p.category === currentFilter.category;
+                return categoryMatch;
+            });
+            
+            filtered.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="card-header">
+                        <span class="expensive-brand">${product.expensive.brand}</span>
+                        <p class="product-name">${product.name}</p>
+                        <span class="category-badge">${product.category === 'blazer' ? 'Ceket' : product.category === 'dress' ? 'Elbise' : product.category === 'pants' ? 'Pantolon' : 'Ayakkabı'}</span>
+                    </div>
+                    <div class="card-body">
+                        <table class="comparison-table">
+                            <tr>
+                                <td>Mağaza:</td>
+                                <td>${product.expensive.platform}</td>
+                            </tr>
+                            <tr>
+                                <td>Fiyat:</td>
+                                <td style="color: #d32f2f; font-weight: 700;">${product.expensive.price}</td>
+                            </tr>
+                        </table>
+                        
+                        <div class="cheap-option">
+                            <div class="store">✓ Ucuz Alternatif</div>
+                            <p style="font-weight: 600; margin: 8px 0;">${product.cheap[0].brand}</p>
+                            <div class="price">${product.cheap[0].price}</div>
+                            <div class="discount">${product.cheap[0].oldPrice} → ${product.cheap[0].discount}</div>
+                            <div class="btn-group">
+                                <a href="${product.cheap[0].link}" target="_blank" rel="nofollow" class="btn btn-secondary">Şimdi Satın Al</a>
+                                <a href="${product.cheap[1].link}" target="_blank" rel="nofollow" class="btn">Alternatif Gör</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+        
+        function filterByCategory(category) {
+            currentFilter.category = category;
+            renderProducts();
+        }
+        
+        function filterByStore(store) {
+            currentFilter.store = store;
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            renderProducts();
+        }
+        
+        // İlk yükleme
+        renderProducts();
+    </script>
+</body>
+</html>
