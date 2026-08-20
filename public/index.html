@@ -3,14 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MAISONIA | Pahalı Markaların Ucuz Muadilleri</title>
+    <title>MAISONIA | Pahalı Markaların Ucuz Muadilleri - Otomatik Güncellemeli</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
         body { background-color: #fcfcfc; color: #111; }
         .top-bar { background: #000; color: #fff; text-align: center; padding: 8px; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; }
+        .update-badge { display: inline-block; background: #4caf50; padding: 4px 12px; border-radius: 20px; margin-left: 10px; font-weight: 600; }
+        
         header { background: #fff; padding: 30px 20px 20px; text-align: center; border-bottom: 1px solid #eaeaea; }
         .logo { font-size: 36px; font-weight: 300; letter-spacing: 8px; text-transform: uppercase; color: #000; text-decoration: none; }
         .tagline { font-size: 11px; letter-spacing: 3px; color: #777; margin-top: 8px; text-transform: uppercase; }
+        
+        .update-info { background: #e8f5e9; padding: 15px 20px; text-align: center; border-bottom: 1px solid #c8e6c9; }
+        .update-info p { font-size: 12px; color: #2e7d32; letter-spacing: 0.5px; }
+        .update-info .time { font-weight: 600; }
+        .update-spinner { display: inline-block; width: 12px; height: 12px; border: 2px solid #2e7d32; border-top: 2px solid transparent; border-radius: 50%; animation: spin 0.8s linear infinite; margin-right: 8px; vertical-align: middle; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         
         .gender-nav { display: flex; justify-content: center; gap: 20px; padding: 15px 0; background: #f5f5f5; border-bottom: 2px solid #000; }
         .gender-btn { padding: 10px 25px; background: #fff; border: 2px solid #000; cursor: pointer; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; transition: all 0.3s; }
@@ -22,10 +30,12 @@
         nav a:hover { color: #888; }
         
         .filter-section { background: #fff; padding: 20px; margin: 20px auto; max-width: 1200px; border: 1px solid #eee; }
-        .filter-group { display: flex; gap: 10px; flex-wrap: wrap; }
+        .filter-group { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
         .filter-btn { padding: 8px 15px; background: #f5f5f5; border: 1px solid #ddd; cursor: pointer; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s; }
         .filter-btn:hover { background: #000; color: #fff; }
         .filter-btn.active { background: #000; color: #fff; }
+        .update-btn { background: #2196F3; color: #fff; border: none; padding: 10px 20px; cursor: pointer; border-radius: 3px; font-size: 12px; font-weight: 600; }
+        .update-btn:hover { background: #0b7dda; }
         
         .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
         .section-header { text-align: center; margin-bottom: 35px; }
@@ -50,6 +60,7 @@
         .cheap-option .store { font-size: 11px; color: #666; text-transform: uppercase; letter-spacing: 1px; }
         .cheap-option .price { font-size: 18px; font-weight: 600; color: #4caf50; margin: 8px 0; }
         .cheap-option .discount { font-size: 12px; color: #d32f2f; font-weight: 600; }
+        .last-update { font-size: 10px; color: #999; margin-top: 8px; }
         
         .btn-group { display: flex; gap: 10px; margin-top: 15px; }
         .btn { flex: 1; padding: 10px; background: #000; color: #fff; text-decoration: none; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; transition: background 0.2s; border: none; cursor: pointer; text-align: center; }
@@ -61,7 +72,6 @@
         
         .loading { text-align: center; padding: 40px; font-size: 14px; }
         .spinner { border: 4px solid #f3f3f3; border-top: 4px solid #000; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto 10px; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         
         footer { margin-top: 80px; background: #fff; border-top: 1px solid #eee; padding: 40px 20px; text-align: center; font-size: 11px; color: #888; letter-spacing: 1px; }
         
@@ -71,15 +81,31 @@
             .btn-group { flex-direction: column; }
             .gender-nav { flex-direction: column; gap: 10px; }
             .gender-btn { width: 100%; }
+            .filter-group { flex-direction: column; }
+            .filter-btn { width: 100%; }
+            .update-btn { width: 100%; }
         }
     </style>
 </head>
 <body>
-    <div class="top-bar">MAISONIA — PAHALI MARKALARIN UCUZ MUADİLLERİ</div>
+    <div class="top-bar">
+        MAISONIA — PAHALI MARKALARIN UCUZ MUADİLLERİ
+        <span class="update-badge">🔄 OTOMATIK GÜNCELLEMELI</span>
+    </div>
+    
     <header>
         <a href="#" class="logo">MAISONIA</a>
-        <p class="tagline">Lüks Stil, Uygun Fiyat</p>
+        <p class="tagline">Lüks Stil, Uygun Fiyat - Her Zaman Güncel Fiyatlar</p>
     </header>
+    
+    <div class="update-info">
+        <p>
+            <span class="update-spinner"></span>
+            <span>Son Güncelleme: <span class="time" id="last-update">Yükleniyor...</span></span>
+            <span style="margin: 0 15px;">|</span>
+            <span>Toplam Ürün: <strong id="total-products">20</strong></span>
+        </p>
+    </div>
     
     <div class="gender-nav">
         <button class="gender-btn active" onclick="filterByGender('kadın')">👗 KADIN</button>
@@ -100,16 +126,18 @@
     <div class="filter-section">
         <div class="filter-group">
             <button class="filter-btn active" onclick="filterByStore('all')">Tüm Mağazalar</button>
-            <button class="filter-btn" onclick="filterByStore('beymen')">Beymen</button>
-            <button class="filter-btn" onclick="filterByStore('zara')">Zara</button>
-            <button class="filter-btn" onclick="filterByStore('hm')">H&M</button>
+            <button class="filter-btn" onclick="filterByStore('trendyol')">Trendyol</button>
+            <button class="filter-btn" onclick="filterByStore('hepsiburada')">Hepsiburada</button>
+            <button class="filter-btn" onclick="filterByStore('defacto')">Defacto</button>
+            <button class="filter-btn" onclick="filterByStore('koton')">Koton</button>
+            <button class="update-btn" onclick="manualUpdate()">🔄 Şimdi Güncelle</button>
         </div>
     </div>
     
     <div class="container">
         <div class="section-header">
             <h2 class="section-title" id="section-title">Editörün Marka Karşılaştırmaları</h2>
-            <p class="section-subtitle">Pahalı markaların aynı tarzda ucuz muadilleri</p>
+            <p class="section-subtitle">Pahalı markaların aynı tarzda ucuz muadilleri - Fiyatlar otomatik güncellenir</p>
         </div>
         
         <div class="grid" id="grid-container">
@@ -121,13 +149,57 @@
     </div>
     
     <footer>
-        <p>© 2026 MAISONIA. TÜM HAKLARI SAKLIDIR. | Affiliate Links İçerebilir</p>
+        <p>© 2026 MAISONIA. TÜM HAKLARI SAKLIDIR. | Fiyatlar gerçek zamanlı olarak güncellenir</p>
+        <p style="margin-top: 10px; font-size: 10px;">✅ Trendyol | Hepsiburada | Defacto | Koton | ve daha fazlası</p>
     </footer>
     
     <script>
         const API_URL = 'http://localhost:5000/api';
         let allProducts = [];
         let currentFilter = { gender: 'kadın', category: 'all', store: 'all' };
+        
+        // Güncelleme bilgisini göster
+        async function updateStatus() {
+            try {
+                const response = await fetch(`${API_URL}/update-status`);
+                const data = await response.json();
+                
+                const lastUpdate = new Date(data.lastUpdate);
+                const formattedDate = lastUpdate.toLocaleString('tr-TR');
+                
+                document.getElementById('last-update').textContent = formattedDate;
+                document.getElementById('total-products').textContent = data.totalProducts;
+            } catch (error) {
+                console.error('Güncelleme bilgisi yüklenemedi:', error);
+            }
+        }
+        
+        // Manuel güncelleme tetikle
+        async function manualUpdate() {
+            try {
+                const btn = event.target;
+                btn.disabled = true;
+                btn.textContent = '🔄 Güncelleniyor...';
+                
+                const response = await fetch(`${API_URL}/update-now`, {
+                    method: 'POST'
+                });
+                
+                if (response.ok) {
+                    btn.textContent = '✅ Güncellendi!';
+                    setTimeout(() => {
+                        btn.disabled = false;
+                        btn.textContent = '🔄 Şimdi Güncelle';
+                        updateStatus();
+                        fetchProducts();
+                    }, 2000);
+                }
+            } catch (error) {
+                alert('Güncelleme başarısız!');
+                event.target.disabled = false;
+                event.target.textContent = '🔄 Şimdi Güncelle';
+            }
+        }
         
         // Ürünleri API'den getir
         async function fetchProducts() {
@@ -193,6 +265,9 @@
                     'jacket': 'Ceket'
                 };
                 
+                const lastUpdate = new Date(product.lastUpdated);
+                const timeAgo = getTimeAgo(lastUpdate);
+                
                 const card = document.createElement('div');
                 card.className = 'card';
                 card.innerHTML = `
@@ -218,6 +293,7 @@
                             <p style="font-weight: 600; margin: 8px 0;">${cheapestOption.brand}</p>
                             <div class="price">${cheapestOption.price}</div>
                             <div class="discount">${cheapestOption.oldPrice} → ${cheapestOption.discount}</div>
+                            <div class="last-update">📅 ${timeAgo}</div>
                             <div class="btn-group">
                                 <a href="${cheapestOption.link}" target="_blank" rel="nofollow" class="btn btn-secondary">Şimdi Satın Al</a>
                                 ${product.cheap[1] ? `<a href="${product.cheap[1].link}" target="_blank" rel="nofollow" class="btn">Alternatif Gör</a>` : ''}
@@ -227,6 +303,18 @@
                 `;
                 container.appendChild(card);
             });
+        }
+        
+        function getTimeAgo(date) {
+            const seconds = Math.floor((new Date() - date) / 1000);
+            
+            if (seconds < 60) return 'Az önce güncellendi';
+            const minutes = Math.floor(seconds / 60);
+            if (minutes < 60) return `${minutes} dakika önce güncellendi`;
+            const hours = Math.floor(minutes / 60);
+            if (hours < 24) return `${hours} saat önce güncellendi`;
+            const days = Math.floor(hours / 24);
+            return `${days} gün önce güncellendi`;
         }
         
         function filterByGender(gender) {
@@ -253,13 +341,19 @@
             currentFilter.store = store;
             const buttons = document.querySelectorAll('.filter-btn');
             buttons.forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
+            if (event.target.classList.contains('filter-btn')) {
+                event.target.classList.add('active');
+            }
             renderProducts();
         }
         
         // Sayfanın başında ürünleri yükle
         updateCategoryNav();
+        updateStatus();
         fetchProducts();
+        
+        // Her 5 dakikada bir güncelleme durumunu kontrol et
+        setInterval(updateStatus, 5 * 60 * 1000);
     </script>
 </body>
 </html>
